@@ -1,0 +1,153 @@
+{{ define "main" }}
+
+{{ $computers := $.Site.Data.rigg.maskinvare.computers }}
+{{ $sounddevs := $.Site.Data.rigg.maskinvare.sounddevices }}
+{{ $phones := $.Site.Data.rigg.maskinvare.phones }}
+
+{{ $services := $.Site.Data.rigg.programvare.services }}
+
+<style>    
+ @charset "UTF-8";
+body {
+  font-family: sans-serif;
+  width: 40em; }
+
+h1, h2 {
+  margin-bottom: 0; }
+
+p {
+  margin-top: 0; }
+  p:last-child {
+    margin-bottom: 0; }
+
+/**
+     * Marketing Accordion
+     * @author: Wayne Parker <wayne_parker@anfcorp.com
+     *
+     * Uses ARIA attributes to style open/closed hidden/displayed states, and animate transitions.
+     * Event code in /wcs70/StaticWeb/WebContent/global/base/js/modules/marketing/marketingAccordion.js
+     */
+.comp-dropdown button {
+  border: none;
+  background: none;
+  font: inherit;
+  padding: 0;
+  outline: -webkit-focus-ring-color auto 0; }
+  .mktg-accordion button[aria-expanded="false"]::after {
+    content: ' +'; }
+  .mktg-accordion button[aria-expanded="true"]::after {
+    content: ' –'; }
+
+.comp-dropdown .comp-dropdown__panel {
+  display: block;
+  margin: 0;
+  max-height: auto;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  transition: visibility 0s ease, max-height 1s ease, opacity 0.5s ease;
+  transition-delay: 0s, 0s, 0.25s;
+  visibility: visible; }
+
+.comp-dropdown .comp-dropdown__panel[aria-hidden="true"] {
+  max-height: 0;
+  opacity: 0;
+  transition: visibility 0s ease, max-height 0.5s ease, opacity 0.5s ease;
+  transition-delay: 0.5s, 0s, 0s;
+  visibility: hidden; }
+</style>
+        <!-- 
+            <range over alle punkter i maskinvare.json>
+                <Lag en tittel for hver type maskinvare>
+                <lag en seksjon for hver type>
+                    <range over alle skapte seksjoner> 
+                        <lag en knapp for hver artikkel>
+                            <knapp kan vise/skjule innholdet til hver artikkel>
+                        
+                        <range over alle datamaskiner>
+                            <lag en knapp for components>
+                                <Components-knapp kan vise/skjule components>
+         -->
+<div class="content-wrapper">
+
+    <section class="maskinvare-rigg">
+        <h2 class="maskinvare-header">Maskinvare</h2>
+        
+            <h3>Datamaskiner</h3>
+            {{ range $computers }}
+
+                {{ $components := .components }}
+                {{ $peripherals := .peripherals }}
+                {{ $screens := .screens }}
+
+                <div class="comp-dropdown" role="tablist">
+                    <h2>
+                        <button 
+                            id="comp-tab" 
+                            aria-expanded="false" 
+                            aria-controls="comp-panel" 
+                            role="tab"
+                            onclick="showComp(this)"
+                            >{{ .name }}
+                        </button>
+                    </h2>
+                    
+                    <div 
+                        id="comp-panel" 
+                        class="comp-dropdown__panel" 
+                        aria-labelled-by="comp-tab" 
+                        aria-hidden="true"
+                        >
+                        <br>
+                        <p>OS: {{ .os }}</p>
+
+                        <!-- slice of names of lists -->
+                        {{ $btns := slice "Components" "Peripherals" "Screens" }}
+                        
+                        <!-- dictionary of lists -->
+                        {{ $lists := dict "Components" $components 
+                                          "Peripherals" $peripherals 
+                                          "Screens" $screens
+                        }}
+                        
+                        <!-- Creates buttons for all lists -->
+                        {{ range $btnname := $btns }}
+
+                        <!-- Components dropdown button -->
+                        <div class="comp-dropdown" role="tablist">
+                            <h2>
+                                <button 
+                                    id="comp-tab" 
+                                    aria-expanded="false" 
+                                    aria-controls="comp-panel" 
+                                    role="tab"
+                                    onclick="showComp(this)"
+                                    > {{ $btnname }}
+                                </button>
+                            </h2>
+                            
+                            <div 
+                                id="comp-panel" 
+                                class="comp-dropdown__panel" 
+                                aria-labelled-by="comp-tab" 
+                                aria-hidden="true"
+                                >
+
+                                <!-- fetches the relevant list from list-dict -->
+                                {{ $currlist := index $lists $btnname}}
+                                <ul>
+                                    {{ range $item := $currlist }}
+                                        <li>{{ $item }}</li>
+                                    {{ end }}
+                                </ul>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+    </section>
+
+    {{ partial "compinfoJS" . }}
+
+{{ end }}

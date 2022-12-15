@@ -168,8 +168,10 @@ p {
                                             aria-labelled-by="comp-tab" 
                                             aria-hidden="true"
                                             >
+
+                                            {{ $info := index $infolist $btnname }}
                                             <ul>
-                                                {{ range $item := $infolist }}
+                                                {{ range $item := $info }}
                                                     <li>{{ $item }}</li>
                                                 {{ end }}
                                             </ul>

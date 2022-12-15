@@ -56,27 +56,16 @@ p {
   transition-delay: 0.5s, 0s, 0s;
   visibility: hidden; }
 </style>
-        <!-- 
-            <range over alle punkter i maskinvare.json>
-                <Lag en tittel for hver type maskinvare>
-                <lag en seksjon for hver type>
-                    <range over alle skapte seksjoner> 
-                        <lag en knapp for hver artikkel>
-                            <knapp kan vise/skjule innholdet til hver artikkel>
-                        
-                        <range over alle datamaskiner>
-                            <lag en knapp for components>
-                                <Components-knapp kan vise/skjule components>
-         -->
+
 <div class="content-wrapper">
 
     <section class="maskinvare-rigg">
         <h2 class="maskinvare-header">Maskinvare</h2>
         
-            <!-- slice of names of subsections -->
+            <!-- Slice of names of subsections -->
             {{ $subsectionnames := slice "Datamaskiner" "Lyd-enheter" "Mobiler" }}
             
-            <!-- dictionary of subsections -->
+            <!-- Dictionary of subsections -->
             {{ $sections := dict 
                 "Datamaskiner" $computers 
                 "Lyd-enheter" $sounddevices 
@@ -85,102 +74,107 @@ p {
             
             {{ range $sectionname := $subsectionnames }}
 
-            <h3>{{ $sectionname }}</h3>
-                    {{ $currsection := index $sections $sectionname}}
-                    {{ range $item := $currsection }}
-                        <div class="comp-dropdown" role="tablist">
-                            <h2>
-                                <button 
-                                    id="comp-tab"
-                                    aria-expanded="false"
-                                    aria-controls="comp-panel"
-                                    role="tab"
-                                    onclick="showComp(this)"
-                                    >{{ .name }}
-                                </button>
-                            </h2>
+                <h3>{{ $sectionname }}</h3>
+                {{ $currsection := index $sections $sectionname}}
+                {{ range $item := $currsection }}
+                    <div class="comp-dropdown" role="tablist">
+                        <h2>
+                            <button 
+                                id="comp-tab"
+                                aria-expanded="false"
+                                aria-controls="comp-panel"
+                                role="tab"
+                                onclick="showComp(this)"
+                                >{{ .name }}
+                            </button>
+                        </h2>
+                        
+                        <div
+                            id="comp-panel"
+                            class="comp-dropdown__panel"
+                            aria-labelled-by="comp-tab"
+                            aria-hidden="true"
+                            >
+
+                            <!-- Specifices portions of json in callable variables -->
+                            {{ $components := .components }}
+                            {{ $peripherals := .peripherals }}
+                            {{ $screens := .screens }}
+                            {{ $specifications := .specifications }}
+
+                            <!-- Dictionaries for details -->
+                            {{ $complists := dict 
+                                "Components" $components 
+                                "Peripherals" $peripherals 
+                                "Screens" $screens
+                            }}
+                            {{ $soundlists := dict 
+                                "Specifications" $specifications
+                            }}
+                            {{ $phonelists := dict 
+                                "Specifications" $specifications 
+                            }}
                             
-                            <div
-                                id="comp-panel"
-                                class="comp-dropdown__panel"
-                                aria-labelled-by="comp-tab"
-                                aria-hidden="true"
-                                >
+                            <!-- Slices of names for each detail section -->
+                            {{ $compnames := slice "Components" "Peripherals" "Screens" }}
+                            {{ $soundnames := slice "Specifications" }}
+                            {{ $phonenames := slice "Specifications"}}
 
-                                {{ $components := .components }}
-                                {{ $peripherals := .peripherals }}
-                                {{ $screens := .screens }}
-                                {{ $specs := .specifications }}
-                                {{ $specifications := .specs }}
+                            <!-- Creates empty scratchpads -->
+                            {{ $scratchList := newScratch }}
+                            {{ $scratchNames := newScratch }}
 
-                                <!-- Dictionaries for details -->
-                                {{ $complists := dict 
-                                    "Components" $components 
-                                    "Peripherals" $peripherals 
-                                    "Screens" $screens
-                                }}
-                                {{ $soundlists := dict 
-                                    "Specifications" $specs 
-                                }}
-                                {{ $phonelists := dict 
-                                    "Specs" $specifications 
-                                }}
-                                
-                                <!-- Slices of names for each detail section -->
-                                {{ $compnames := slice "Components" "Peripherals" "Screens" }}
-                                {{ $soundnames := slice "Specifications" }}
-                                {{ $phonenames := slice "Specs"}}
+                            <!-- Appends all info-lists into same scratchpad -->
+                            {{ $scratchList.Set "Datamaskiner" $complists }}
+                            {{ $scratchList.Set "Lyd-enheter" $soundlists }}
+                            {{ $scratchList.Set "Mobiler" $phonelists }}
 
-                                {{ $scratchList := newScratch }}
+                            <!-- Appends all name-lists into same scratchpad -->
+                            {{ $scratchNames.Set "Datamaskiner" $compnames }}
+                            {{ $scratchNames.Set "Lyd-enheter" $soundnames }}
+                            {{ $scratchNames.Set "Mobiler" $phonenames }}
 
-                                {{ $scratchList.Set "Datamaskiner" $complists }}
-                                {{ $scratchList.Set "Lyd-enheter" $soundlists }}
-                                {{ $scratchList.Set "Mobiler" $phonelists }}
+                            <!-- Fetches the relevant lists from scratchpads -->
+                            {{ $namelist := $scratchNames.Get $sectionname }}
+                            {{ $infolist := $scratchList.Get $sectionname }}
 
-                                {{ $scratchNames := newScratch }}
+                                <!-- Creates buttons for all lists -->
+                            {{ range $btnname := $namelist }}
 
-                                {{ $scratchNames.Set "Datamaskiner" $compnames }}
-                                {{ $scratchNames.Set "Lyd-enheter" $soundnames }}
-                                {{ $scratchNames.Set "Mobiler" $phonenames }}
+                                <!-- Components dropdown button -->
+                                <div class="comp-dropdown" role="tablist">
+                                    <h2>
+                                        <button 
+                                            id="comp-tab" 
+                                            aria-expanded="false" 
+                                            aria-controls="comp-panel" 
+                                            role="tab"
+                                            onclick="showComp(this)"
+                                            > {{ $btnname }}
+                                        </button>
+                                    </h2>
+                                    
+                                    <div 
+                                        id="comp-panel" 
+                                        class="comp-dropdown__panel" 
+                                        aria-labelled-by="comp-tab" 
+                                        aria-hidden="true"
+                                        >
 
-                                {{ $namelist := $scratchNames.Get $sectionname }}
-                                {{ $infolist := $scratchList.Get $sectionname }}
-
-                                    <!-- Creates buttons for all lists -->
-                                {{ range $btnname := $namelist }}
-
-                                    <!-- Components dropdown button -->
-                                    <div class="comp-dropdown" role="tablist">
-                                        <h2>
-                                            <button 
-                                                id="comp-tab" 
-                                                aria-expanded="false" 
-                                                aria-controls="comp-panel" 
-                                                role="tab"
-                                                onclick="showComp(this)"
-                                                > {{ $btnname }}
-                                            </button>
-                                        </h2>
-                                        
-                                        <div 
-                                            id="comp-panel" 
-                                            class="comp-dropdown__panel" 
-                                            aria-labelled-by="comp-tab" 
-                                            aria-hidden="true"
-                                            >
-
-                                            {{ $info := index $infolist $btnname }}
-                                            <ul>
-                                                {{ range $item := $info }}
-                                                    <li>{{ $item }}</li>
-                                                {{ end }}
-                                            </ul>
-                                        </div>
+                                        <!-- loops through relevant portion of json
+                                                and creates list item  -->
+                                        {{ $info := index $infolist $btnname }}
+                                        <ul>
+                                            {{ range $item := $info }}
+                                                <li>{{ $item }}</li>
+                                            {{ end }}
+                                        </ul>
                                     </div>
-                                {{ end }}
-                            </div>
+                                </div>
+                            {{ end }}
                         </div>
-                    {{ end }}
+                    </div>
+                {{ end }}
             {{ end }}
     </section>
 

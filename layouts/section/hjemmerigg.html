@@ -1,7 +1,7 @@
 {{ define "main" }}
 
 {{ $computers := $.Site.Data.rigg.maskinvare.computers }}
-{{ $sounddevs := $.Site.Data.rigg.maskinvare.sounddevices }}
+{{ $sounddevices := $.Site.Data.rigg.maskinvare.sounddevices }}
 {{ $phones := $.Site.Data.rigg.maskinvare.phones }}
 
 {{ $services := $.Site.Data.rigg.programvare.services }}
@@ -73,78 +73,112 @@ p {
     <section class="maskinvare-rigg">
         <h2 class="maskinvare-header">Maskinvare</h2>
         
-            <h3>Datamaskiner</h3>
-            {{ range $computers }}
+            <!-- slice of names of subsections -->
+            {{ $subsectionnames := slice "Datamaskiner" "Lyd-enheter" "Mobiler" }}
+            
+            <!-- dictionary of subsections -->
+            {{ $sections := dict 
+                "Datamaskiner" $computers 
+                "Lyd-enheter" $sounddevices 
+                "Mobiler" $phones
+            }}
+            
+            {{ range $sectionname := $subsectionnames }}
 
-                {{ $components := .components }}
-                {{ $peripherals := .peripherals }}
-                {{ $screens := .screens }}
-
-                <div class="comp-dropdown" role="tablist">
-                    <h2>
-                        <button 
-                            id="comp-tab" 
-                            aria-expanded="false" 
-                            aria-controls="comp-panel" 
-                            role="tab"
-                            onclick="showComp(this)"
-                            >{{ .name }}
-                        </button>
-                    </h2>
-                    
-                    <div 
-                        id="comp-panel" 
-                        class="comp-dropdown__panel" 
-                        aria-labelled-by="comp-tab" 
-                        aria-hidden="true"
-                        >
-                        <br>
-                        <p>OS: {{ .os }}</p>
-
-                        <!-- slice of names of lists -->
-                        {{ $btns := slice "Components" "Peripherals" "Screens" }}
-                        
-                        <!-- dictionary of lists -->
-                        {{ $lists := dict "Components" $components 
-                                          "Peripherals" $peripherals 
-                                          "Screens" $screens
-                        }}
-                        
-                        <!-- Creates buttons for all lists -->
-                        {{ range $btnname := $btns }}
-
-                        <!-- Components dropdown button -->
+            <h3>{{ $sectionname }}</h3>
+                    {{ $currsection := index $sections $sectionname}}
+                    {{ range $item := $currsection }}
                         <div class="comp-dropdown" role="tablist">
                             <h2>
                                 <button 
-                                    id="comp-tab" 
-                                    aria-expanded="false" 
-                                    aria-controls="comp-panel" 
+                                    id="comp-tab"
+                                    aria-expanded="false"
+                                    aria-controls="comp-panel"
                                     role="tab"
                                     onclick="showComp(this)"
-                                    > {{ $btnname }}
+                                    >{{ .name }}
                                 </button>
                             </h2>
                             
-                            <div 
-                                id="comp-panel" 
-                                class="comp-dropdown__panel" 
-                                aria-labelled-by="comp-tab" 
+                            <div
+                                id="comp-panel"
+                                class="comp-dropdown__panel"
+                                aria-labelled-by="comp-tab"
                                 aria-hidden="true"
                                 >
 
-                                <!-- fetches the relevant list from list-dict -->
-                                {{ $currlist := index $lists $btnname}}
-                                <ul>
-                                    {{ range $item := $currlist }}
-                                        <li>{{ $item }}</li>
-                                    {{ end }}
-                                </ul>
+                                {{ $components := .components }}
+                                {{ $peripherals := .peripherals }}
+                                {{ $screens := .screens }}
+                                {{ $specs := .specifications }}
+                                {{ $specifications := .specs }}
+
+                                <!-- Dictionaries for details -->
+                                {{ $complists := dict 
+                                    "Components" $components 
+                                    "Peripherals" $peripherals 
+                                    "Screens" $screens
+                                }}
+                                {{ $soundlists := dict 
+                                    "Specifications" $specs 
+                                }}
+                                {{ $phonelists := dict 
+                                    "Specs" $specifications 
+                                }}
+                                
+                                <!-- Slices of names for each detail section -->
+                                {{ $compnames := slice "Components" "Peripherals" "Screens" }}
+                                {{ $soundnames := slice "Specifications" }}
+                                {{ $phonenames := slice "Specs"}}
+
+                                {{ $scratchList := newScratch }}
+
+                                {{ $scratchList.Set "Datamaskiner" $complists }}
+                                {{ $scratchList.Set "Lyd-enheter" $soundlists }}
+                                {{ $scratchList.Set "Mobiler" $phonelists }}
+
+                                {{ $scratchNames := newScratch }}
+
+                                {{ $scratchNames.Set "Datamaskiner" $compnames }}
+                                {{ $scratchNames.Set "Lyd-enheter" $soundnames }}
+                                {{ $scratchNames.Set "Mobiler" $phonenames }}
+
+                                {{ $namelist := $scratchNames.Get $sectionname }}
+                                {{ $infolist := $scratchList.Get $sectionname }}
+
+                                    <!-- Creates buttons for all lists -->
+                                {{ range $btnname := $namelist }}
+
+                                    <!-- Components dropdown button -->
+                                    <div class="comp-dropdown" role="tablist">
+                                        <h2>
+                                            <button 
+                                                id="comp-tab" 
+                                                aria-expanded="false" 
+                                                aria-controls="comp-panel" 
+                                                role="tab"
+                                                onclick="showComp(this)"
+                                                > {{ $btnname }}
+                                            </button>
+                                        </h2>
+                                        
+                                        <div 
+                                            id="comp-panel" 
+                                            class="comp-dropdown__panel" 
+                                            aria-labelled-by="comp-tab" 
+                                            aria-hidden="true"
+                                            >
+                                            <ul>
+                                                {{ range $item := $infolist }}
+                                                    <li>{{ $item }}</li>
+                                                {{ end }}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {{ end }}
                             </div>
                         </div>
-                        {{ end }}
-                    </div>
-                </div>
+                    {{ end }}
             {{ end }}
     </section>
 

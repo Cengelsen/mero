@@ -449,6 +449,139 @@ footer {
   
 }
 
+/* Rigg page */
+
+.hw-rigg{
+  width: 60%;
+  display: flex;
+  align-items: center;
+  flex-direction: column !important;
+}
+
+.hw-wrapper{
+  width: 100%;
+}
+
+#section-tab{
+  color: #ffc107;
+  width: 100%;
+}
+
+#section-tab:hover{
+  cursor: pointer;
+}
+
+#section-panel{
+  display: flex;
+  align-items: center;
+  flex-direction: column !important;
+}
+
+.info-wrapper{
+  width: 80%;
+}
+
+#info-tab{
+  color: #ffc107;
+  width: 100%;
+}
+
+#info-tab:hover{
+  cursor: pointer;
+}
+
+.info-list{  
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column !important;
+}
+
+.info-item{
+  width: 90%;
+  border: solid .5px gray;
+  margin-bottom: 5px;
+}
+
+.info-item:hover{
+  background-color: #6c757d;
+}
+
+#section-tab:hover{
+  cursor: pointer;
+}
+
+.section-dropdown button {
+  border: none;
+  background: none;
+  font: inherit;
+  padding: 0;
+  outline: -webkit-focus-ring-color auto 0; 
+}
+.section-dropdown button[aria-expanded="false"]::after {
+  content: ' +'; 
+}
+.section-dropdown button[aria-expanded="true"]::after {
+  content: ' –'; 
+}
+
+.section-dropdown .section-dropdown__panel {
+  display: block;
+  margin: 0;
+  max-height: auto;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  transition: visibility 0s ease, max-height 1s ease, opacity 0.5s ease;
+  transition-delay: 0s, 0s, 0.25s;
+  visibility: visible; 
+}
+
+.section-dropdown .section-dropdown__panel[aria-hidden="true"] {
+  max-height: 0;
+  opacity: 0;
+  transition: visibility 0s ease, max-height 0.5s ease, opacity 0.5s ease;
+  transition-delay: 0.5s, 0s, 0s;
+  visibility: hidden; 
+}
+
+.info-dropdown button {
+  border: none;
+  color: gray;
+  background: none;
+  font: inherit;
+  padding: 0;
+  outline: -webkit-focus-ring-color auto 0; 
+}
+.info-dropdown button[aria-expanded="false"]::after {
+  content: ' +'; 
+}
+.info-dropdown button[aria-expanded="true"]::after {
+  content: ' –'; 
+}
+
+.info-dropdown .info-dropdown__panel {
+  display: block;
+  margin: 0;
+  max-height: auto;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  transition: visibility 0s ease, max-height 1s ease, opacity 0.5s ease;
+  transition-delay: 0s, 0s, 0.25s;
+  visibility: visible; 
+}
+
+.info-dropdown .info-dropdown__panel[aria-hidden="true"] {
+  max-height: 0;
+  opacity: 0;
+  transition: visibility 0s ease, max-height 0.5s ease, opacity 0.5s ease;
+  transition-delay: 0.5s, 0s, 0s;
+  visibility: hidden; 
+}
+
 /* Taxa page */
 .taxa-title{
   margin-top: 1.5rem !important;

@@ -1,0 +1,20 @@
+<script language="JavaScript" type="text/javascript">
+
+    let showComp = function(btn) {
+        let thisTab = btn;
+       
+        // Get target panel object from event target
+        let thisPanel = btn.parentNode.nextElementSibling;
+
+        // Opens the panel if it is closed
+        if (thisTab.getAttribute('aria-expanded') === 'false') {
+            thisTab.setAttribute('aria-expanded', 'true' );
+            thisPanel.setAttribute('aria-hidden', 'false');
+        
+        // Closes the panel, if it is open
+        } else {
+            thisTab.setAttribute('aria-expanded', 'false');
+            thisPanel.setAttribute('aria-hidden', 'true');
+        }
+    };
+</script>

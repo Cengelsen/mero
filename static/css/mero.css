@@ -462,16 +462,13 @@ footer {
   width: 100%;
 }
 
-.section-dropdown{
-
-}
-
-.hw-rigg-link{
-}
-
 #section-tab{
   color: #ffc107;
   width: 100%;
+}
+
+#section-tab:hover{
+  cursor: pointer;
 }
 
 #section-panel{
@@ -489,6 +486,10 @@ footer {
   width: 100%;
 }
 
+#info-tab:hover{
+  cursor: pointer;
+}
+
 .info-list{  
   margin: 0px;
   padding: 0px;
@@ -501,6 +502,7 @@ footer {
 .info-item{
   width: 90%;
   border: solid .5px gray;
+  margin-bottom: 5px;
 }
 
 .info-item:hover{
@@ -508,10 +510,6 @@ footer {
 }
 
 #section-tab:hover{
-  cursor: pointer;
-}
-
-#info-tab:hover{
   cursor: pointer;
 }
 

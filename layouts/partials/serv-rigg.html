@@ -1,12 +1,15 @@
+<!-- reference to contents of json-file -->
 {{ $services := $.Site.Data.rigg.programvare.services }}
 
 <section class="serv-rigg">
     <h1 class="serv-header">Tjenester</h1>
 
+    <!-- creates object for each iterable in map & loops through them -->
     {{ range $sectionname := $services }}
 
         <div class="serv-wrapper">
 
+            <!-- top-layer button that hides content-buttons -->
             <div class="section-dropdown" role="tablist">
                 <a class="hw-unit-link">
                     <button 
@@ -20,6 +23,7 @@
                     </button>
                 </a>
                 
+                <!-- contents of the top-layer button -->
                 <div
                     id="section-panel"
                     class="section-dropdown__panel"
@@ -27,12 +31,15 @@
                     aria-hidden="true"
                     >
 
+                    <!-- splits the json-text with a delimiter -->
                     {{ $descsplit := split .description "\n" }}
 
+                    <!-- creates p-element for each string in descplit -->
                     {{ range $descsplit }}
                         <p class="serv-desc"> {{ . }} </p>
                     {{ end }}
 
+                    <!-- clickable button for source of info -->
                     <a class="desc-link" 
                        href="{{ .link }}"
                        target="_blank"
@@ -42,6 +49,8 @@
                             role="tab"
                             >
                             <h4>Kilde 
+
+                                <!-- SVG code for "open in new tab"-icon -->
                                 <svg version="1.0" 
                                      xmlns="http://www.w3.org/2000/svg"
                                      class="newtab-icon"
@@ -80,12 +89,9 @@
                                         />
                                     </g>
                                 </svg>
-
-
                             </h4>
                        </button>
                     </a>
-
                 </div>
             </div>     
         </div>

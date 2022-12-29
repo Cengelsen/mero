@@ -1,8 +1,7 @@
+<!-- references to specific parts of the relevant json-file -->
 {{ $computers := $.Site.Data.rigg.maskinvare.computers }}
 {{ $sounddevices := $.Site.Data.rigg.maskinvare.sounddevices }}
 {{ $phones := $.Site.Data.rigg.maskinvare.phones }}
-
-{{ $services := $.Site.Data.rigg.programvare.services }}
 
 <section class="hw-rigg">
     <h1 class="hw-header">Maskinvare</h1>
@@ -17,13 +16,20 @@
         "Mobiler" $phones
     }}
     
+    <!-- creates object for each iterable in dict & loops through them -->
     {{ range $sectionname := $subsectionnames }}
 
         <h2>{{ $sectionname }}</h2>
 
         <div class="hw-wrapper">
+
+            <!-- variable the fetches the relevant json-content to loop through -->
             {{ $currsection := index $sections $sectionname}}
+
+            <!-- loops through json-content -->
             {{ range $item := $currsection }}
+
+                <!-- top-layer button that hides/shows content-buttons -->
                 <div class="section-dropdown" role="tablist">
                     <a class="hw-unit-link">
                         <button 
@@ -37,6 +43,7 @@
                         </button>
                     </a>
                     
+                    <!-- content-section that hides/shows content-buttons -->
                     <div
                         id="section-panel"
                         class="section-dropdown__panel"

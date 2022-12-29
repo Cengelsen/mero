@@ -599,10 +599,9 @@ footer {
 
 }
 
-/* Adding specific colour to svg. 
-Used https://codepen.io/sosuke/pen/Pjoqqp to convert #ffc107 */
-
 .newtab-icon{
+  /* Adding specific colour to svg. 
+  Used https://codepen.io/sosuke/pen/Pjoqqp to convert #ffc107 */
   filter: invert(75%) 
           sepia(71%) 
           saturate(1616%) 

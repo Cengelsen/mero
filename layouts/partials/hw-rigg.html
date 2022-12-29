@@ -1,0 +1,131 @@
+{{ $computers := $.Site.Data.rigg.maskinvare.computers }}
+{{ $sounddevices := $.Site.Data.rigg.maskinvare.sounddevices }}
+{{ $phones := $.Site.Data.rigg.maskinvare.phones }}
+
+{{ $services := $.Site.Data.rigg.programvare.services }}
+
+<section class="hw-rigg">
+    <h1 class="hw-header">Maskinvare</h1>
+    
+    <!-- Slice of names of subsections -->
+    {{ $subsectionnames := slice "Datamaskiner" "Lyd-enheter" "Mobiler" }}
+    
+    <!-- Dictionary of subsections -->
+    {{ $sections := dict 
+        "Datamaskiner" $computers 
+        "Lyd-enheter" $sounddevices 
+        "Mobiler" $phones
+    }}
+    
+    {{ range $sectionname := $subsectionnames }}
+
+        <h2>{{ $sectionname }}</h2>
+
+        <div class="hw-wrapper">
+            {{ $currsection := index $sections $sectionname}}
+            {{ range $item := $currsection }}
+                <div class="section-dropdown" role="tablist">
+                    <a class="hw-unit-link">
+                        <button 
+                            id="section-tab"
+                            class="list-item"
+                            aria-expanded="false"
+                            aria-controls="section-panel"
+                            role="tab"
+                            onclick="showComp(this)"
+                            > <h3>{{ .name }}</h3>
+                        </button>
+                    </a>
+                    
+                    <div
+                        id="section-panel"
+                        class="section-dropdown__panel"
+                        aria-labelled-by="section-tab"
+                        aria-hidden="true"
+                        >
+
+                        <!-- Specifices portions of json in callable variables -->
+                        {{ $components := .components }}
+                        {{ $peripherals := .peripherals }}
+                        {{ $screens := .screens }}
+                        {{ $specifications := .specifications }}
+
+                        <!-- Dictionaries for details -->
+                        {{ $complists := dict 
+                            "Komponenter" $components 
+                            "Periferaler" $peripherals 
+                            "Skjermer" $screens
+                        }}
+                        {{ $soundlists := dict 
+                            "Spesifikasjoner" $specifications
+                        }}
+                        {{ $phonelists := dict 
+                            "Spesifikasjoner" $specifications 
+                        }}
+                        
+                        <!-- Slices of names for each detail section -->
+                        {{ $compnames := slice "Komponenter" "Periferaler" "Skjermer" }}
+                        {{ $soundnames := slice "Spesifikasjoner" }}
+                        {{ $phonenames := slice "Spesifikasjoner"}}
+
+                        <!-- Creates empty scratchpads -->
+                        {{ $scratchList := newScratch }}
+                        {{ $scratchNames := newScratch }}
+
+                        <!-- Appends all info-lists into same scratchpad -->
+                        {{ $scratchList.Set "Datamaskiner" $complists }}
+                        {{ $scratchList.Set "Lyd-enheter" $soundlists }}
+                        {{ $scratchList.Set "Mobiler" $phonelists }}
+
+                        <!-- Appends all name-lists into same scratchpad -->
+                        {{ $scratchNames.Set "Datamaskiner" $compnames }}
+                        {{ $scratchNames.Set "Lyd-enheter" $soundnames }}
+                        {{ $scratchNames.Set "Mobiler" $phonenames }}
+
+                        <!-- Fetches the relevant lists from scratchpads -->
+                        {{ $namelist := $scratchNames.Get $sectionname }}
+                        {{ $infolist := $scratchList.Get $sectionname }}
+
+                        <div class="info-wrapper">
+                            <!-- Creates buttons for all lists -->
+                            {{ range $btnname := $namelist }}
+
+                                <!-- Components dropdown button -->
+                                <div class="info-dropdown" role="tablist">
+                                    <a class="hw-info-link">
+                                        <button 
+                                            id="info-tab"
+                                            class="list-item"
+                                            aria-expanded="false" 
+                                            aria-controls="info-panel" 
+                                            role="tab"
+                                            onclick="showComp(this)"
+                                            ><h4>{{ $btnname }}</h4>
+                                        </button>
+                                    </a>
+                                    
+                                    <div 
+                                        id="info-panel" 
+                                        class="info-dropdown__panel" 
+                                        aria-labelled-by="info-tab" 
+                                        aria-hidden="true"
+                                        >
+
+                                        <!-- loops through relevant portion of json
+                                                and creates list item  -->
+                                        {{ $info := index $infolist $btnname }}
+                                        <ul class="info-list">
+                                            {{ range $item := $info }}
+                                                <li class="info-item">{{ $item }}</li>
+                                            {{ end }}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ end }}        
+        </div>
+    {{ end }}
+</section>

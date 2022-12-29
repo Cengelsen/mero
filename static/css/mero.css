@@ -451,14 +451,14 @@ footer {
 
 /* Rigg page */
 
-.hw-rigg{
+.hw-rigg, .serv-rigg{
   width: 60%;
   display: flex;
   align-items: center;
   flex-direction: column !important;
 }
 
-.hw-wrapper{
+.hw-wrapper, .serv-wrapper{
   width: 100%;
 }
 

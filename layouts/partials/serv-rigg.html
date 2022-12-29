@@ -1,0 +1,40 @@
+{{ $computers := $.Site.Data.rigg.maskinvare.computers }}
+{{ $sounddevices := $.Site.Data.rigg.maskinvare.sounddevices }}
+{{ $phones := $.Site.Data.rigg.maskinvare.phones }}
+
+{{ $services := $.Site.Data.rigg.programvare.services }}
+
+<section class="serv-rigg">
+    <h1 class="serv-header">Tjenester</h1>
+
+    {{ range $sectionname := $services }}
+
+        <div class="serv-wrapper">
+
+            <div class="section-dropdown" role="tablist">
+                <a class="hw-unit-link">
+                    <button 
+                        id="section-tab"
+                        class="list-item"
+                        aria-expanded="false"
+                        aria-controls="section-panel"
+                        role="tab"
+                        onclick="showComp(this)"
+                        > <h3>{{ .name }}</h3>
+                    </button>
+                </a>
+                
+                <div
+                    id="section-panel"
+                    class="section-dropdown__panel"
+                    aria-labelled-by="section-tab"
+                    aria-hidden="true"
+                    >
+
+                    <p class="serv-desc"> {{$sectionname.description}} </p>
+                   
+                </div>
+            </div>     
+        </div>
+    {{ end }}
+</section>

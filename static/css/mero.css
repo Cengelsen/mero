@@ -450,7 +450,7 @@ footer {
 }
 
 /* Rigg page */
-
+/* Hardware section */
 .hw-rigg, .serv-rigg{
   width: 60%;
   display: flex;
@@ -580,6 +580,35 @@ footer {
   transition: visibility 0s ease, max-height 0.5s ease, opacity 0.5s ease;
   transition-delay: 0.5s, 0s, 0s;
   visibility: hidden; 
+}
+
+/* Services section */
+.serv-desc{
+  width: 80%;
+  text-align: justify;
+}
+
+.desc-link{
+  width: 80%;
+}
+
+.desc-btn{
+  width: 100%;
+  cursor: pointer;
+  color: #ffc107;
+
+}
+
+/* Adding specific colour to svg. 
+Used https://codepen.io/sosuke/pen/Pjoqqp to convert #ffc107 */
+
+.newtab-icon{
+  filter: invert(75%) 
+          sepia(71%) 
+          saturate(1616%) 
+          hue-rotate(353deg) 
+          brightness(103%) 
+          contrast(101%);
 }
 
 /* Taxa page */

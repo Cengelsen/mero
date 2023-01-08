@@ -1,37 +1,24 @@
 <nav class="navbar">
   <div class="navbtn-section">
     
-    <!-- Home-button -->
-    <div
-      class="nav-btn"
-      style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;"
-      >
-      <a href="{{ `/` | relURL }}"><span>Hjem</span></a>
-    </div>
-  
-    <!-- Blogs-button -->
-    <div 
-      class="nav-btn">
-      <a 
-        href="{{ `/blog` | relURL }}"><span>Blogg</span>
-      </a>
-    </div>
-    
-    <!-- Blogs-button -->
-    <div 
-      class="nav-btn">
-      <a 
-        href="{{ `/hjemmerigg` | relURL }}"><span>Rigg</span>
-      </a>
-    </div>
+    <ul class="navbar-list navbtn-section">
+      {{- $currentPage := . -}}
+      {{ range .Site.Menus.main -}}
+      <li class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }} nav-btn">
+          <a href="{{ relLangURL .URL}}"><span>{{ .Name }}</span></a>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
 
-    <!-- Taxa-button -->
-    <div class="nav-btn"
-    style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
-      <a
-        href="{{ `/taxa/` | relURL }}"><span>Taxa</span>
-      </a>
-    </div>
+  <!-- Language switcher -->
+  <div class="lang-btn">
+    {{ if eq $.Site.Language.LanguageName "Norsk"}}
+      <a class="lang-btn-flag" href="{{ replace .Permalink (absURL "") (absURL "en/") }}" style="font-size: 4rem;">🇬🇧</a>
+
+    {{ else if eq $.Site.Language.LanguageName "English" }}
+      <a class="lang-btn-flag" href="{{ replace .Permalink (absURL "en/") (absURL "") }}" style="font-size: 4rem;">🇳🇴</a>
+    {{ end }}
   </div>
 </nav>
  

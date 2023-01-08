@@ -84,14 +84,31 @@ td{
   margin-bottom: 1rem !important;
   margin-top: 1rem !important;
   margin-left: .25rem !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbtn-section{
-  margin-left: .4rem !important;
+  margin-left: .2rem !important;
   -ms-flex-direction: row !important;
   flex-direction: row !important;
   display: -ms-flexbox !important;
   display: flex !important;
+}
+
+.navbar-list{
+  list-style-type: none;
+  padding: 0px;
+}
+
+.navbar-list .nav-btn:first-child{
+  border-top-left-radius: 10px; 
+  border-bottom-left-radius: 10px;
+}
+
+.navbar-list .nav-btn:last-child{
+  border-top-right-radius: 10px; 
+  border-bottom-right-radius: 10px;
 }
 
 .nav-btn{
@@ -114,6 +131,12 @@ td{
 
 .nav-btn:hover{
   transform: scale(1.1);
+}
+
+.lang-btn{
+  height: auto;
+  width: auto;
+  align-self: flex-end;
 }
 
 /* Footer */

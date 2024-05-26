@@ -780,3 +780,13 @@ footer {
   border-bottom: 1px solid #dee2e6 !important;
   border-top: 1px solid #dee2e6 !important;
 }
+
+.img-fluid{
+  height: auto;
+  border-radius: .25rem !important;
+  max-width: 100%;
+  vertical-align: middle;
+  border-style: none;
+  box-shadow: 0 15px 15px rgb(0 0 0 / 0.5);
+  margin-bottom: 2%;
+}

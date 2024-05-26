@@ -134,9 +134,10 @@ td{
 }
 
 .lang-btn{
-  height: auto;
-  width: auto;
   align-self: flex-end;
+  font-size: 2rem;
+  margin: auto;
+  margin-right: 7px;
 }
 
 /* Footer */

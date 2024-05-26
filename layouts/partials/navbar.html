@@ -14,10 +14,10 @@
   <!-- Language switcher -->
   <div class="lang-btn">
     {{ if eq $.Site.Language.LanguageName "Norsk"}}
-      <a class="lang-btn-flag" href="{{ replace .Permalink (absURL "") (absURL "en/") }}" style="font-size: 4rem;">🇬🇧</a>
+    	<a class="lang-btn-flag" href="{{ absURL "en" }}{{ .Permalink }}">English</a>
 
     {{ else if eq $.Site.Language.LanguageName "English" }}
-      <a class="lang-btn-flag" href="{{ replace .Permalink (absURL "en/") (absURL "") }}" style="font-size: 4rem;">🇳🇴</a>
+    	<a class="lang-btn-flag" href="{{ replace .Permalink (absURL "en/") (absURL "") }}">Norsk</a>
     {{ end }}
   </div>
 </nav>
